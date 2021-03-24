@@ -29837,7 +29837,7 @@ var CityScores = function CityScores(_ref) {
   var cityName = _ref.cityName;
 
   var _useState = (0, _react.useState)({
-    summary: '',
+    summary: "",
     categories: [],
     overall: null
   }),
@@ -29851,11 +29851,11 @@ var CityScores = function CityScores(_ref) {
         return res.json();
       }
     }).then(function (data) {
-      if (_typeof(data) === 'object') {
+      if (_typeof(data) === "object") {
         setScoreDetails({
           summary: data.summary,
           categories: data.categories,
-          overall: data['teleport_city_score']
+          overall: data["teleport_city_score"]
         });
       } else {
         setScoreDetails({});
@@ -29865,6 +29865,7 @@ var CityScores = function CityScores(_ref) {
     });
   }, [cityName]);
   return /*#__PURE__*/_react.default.createElement("div", {
+    "data-cy": "cityScores",
     className: "details__scores"
   }, scoreDetails.summary ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("h4", null, "Overall Score: ", Math.round(scoreDetails.overall), "/100"), /*#__PURE__*/_react.default.createElement("p", {
     dangerouslySetInnerHTML: {
@@ -29875,8 +29876,10 @@ var CityScores = function CityScores(_ref) {
         score_out_of_10 = _ref2.score_out_of_10;
     return /*#__PURE__*/_react.default.createElement("li", {
       key: "".concat(name, "-").concat(score_out_of_10)
-    }, name, ": ", /*#__PURE__*/_react.default.createElement("span", null, score_out_of_10.toFixed(1)), "/10");
-  }))) : /*#__PURE__*/_react.default.createElement("p", null, "No details available for this location"));
+    }, name, ": ", /*#__PURE__*/_react.default.createElement("span", null, score_out_of_10.toFixed(1)), " / 10");
+  }))) : /*#__PURE__*/_react.default.createElement("p", {
+    "data-cy": "nothing-available"
+  }, "No details available for this location"));
 };
 
 var _default = CityScores;
@@ -29902,11 +29905,13 @@ var CityDetails = function CityDetails(_ref) {
       full_name = details.full_name,
       population = details.population;
   return /*#__PURE__*/_react.default.createElement("article", {
+    "data-cy": "cityDetails",
     className: "details"
   }, imageUrl ? /*#__PURE__*/_react.default.createElement("img", {
+    "data-cy": "cityImage",
     src: imageUrl,
     alt: "Photo of ".concat(full_name)
-  }) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null), /*#__PURE__*/_react.default.createElement("h1", null, name), /*#__PURE__*/_react.default.createElement("h2", null, full_name), /*#__PURE__*/_react.default.createElement("h3", null, "Population: ", population), /*#__PURE__*/_react.default.createElement(_CityScores.default, {
+  }) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null), /*#__PURE__*/_react.default.createElement("h2", null, name), /*#__PURE__*/_react.default.createElement("h3", null, full_name), /*#__PURE__*/_react.default.createElement("h4", null, "Population: ", population), /*#__PURE__*/_react.default.createElement(_CityScores.default, {
     cityName: name
   }));
 };
@@ -29969,13 +29974,14 @@ var SearchBar = function SearchBar() {
     (0, _API.getResultsBySearchTerm)(term).then(function (res) {
       return res.json();
     }).then(function (data) {
-      setResults(data['_embedded']['city:search-results']);
+      setResults(data["_embedded"]["city:search-results"]);
     }).catch(function (err) {
       return console.error(err);
     });
   };
 
   return /*#__PURE__*/_react.default.createElement("form", {
+    "data-cy": "searchbar",
     className: "search__bar",
     onSubmit: handleSubmit,
     action: "submit"
@@ -29983,6 +29989,7 @@ var SearchBar = function SearchBar() {
     type: "text",
     ref: inputRef
   }), /*#__PURE__*/_react.default.createElement("button", {
+    "data-cy": "search",
     className: "btn btn--search",
     type: "submit"
   }, /*#__PURE__*/_react.default.createElement("span", null, "Search "), /*#__PURE__*/_react.default.createElement("i", {
@@ -30368,7 +30375,7 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-var shortid = require('shortid');
+var shortid = require("shortid");
 
 var SearchResults = function SearchResults(_ref) {
   var setCityDetails = _ref.setCityDetails;
@@ -30377,10 +30384,11 @@ var SearchResults = function SearchResults(_ref) {
       results = _useContext.results;
 
   return /*#__PURE__*/_react.default.createElement("section", {
-    className: "search__results"
-  }, /*#__PURE__*/_react.default.createElement("h2", null, results.length ? "".concat(results.length, " matches found") : 'No results yet!'), results.map(function (item) {
-    var url = item['_links']['city:item']['href'];
-    var fullName = item['matching_full_name'];
+    className: "search__results",
+    "data-cy": "results"
+  }, /*#__PURE__*/_react.default.createElement("h2", null, results.length ? "".concat(results.length, " matches found") : "No results yet!"), results.map(function (item) {
+    var url = item["_links"]["city:item"]["href"];
+    var fullName = item["matching_full_name"];
     return /*#__PURE__*/_react.default.createElement("button", {
       className: "btn",
       key: shortid.generate(),
@@ -30441,7 +30449,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var App = function App() {
   var _useState = (0, _react.useState)({
-    term: '',
+    term: "",
     results: []
   }),
       _useState2 = _slicedToArray(_useState, 2),
@@ -30453,7 +30461,7 @@ var App = function App() {
       cityDetails = _useState4[0],
       getCityDetails = _useState4[1];
 
-  var _useState5 = (0, _react.useState)(''),
+  var _useState5 = (0, _react.useState)(""),
       _useState6 = _slicedToArray(_useState5, 2),
       imageUrl = _useState6[0],
       setImageUrl = _useState6[1];
@@ -30488,10 +30496,10 @@ var App = function App() {
           return res.json();
         }
       }).then(function (data) {
-        if (_typeof(data) === 'object') {
+        if (_typeof(data) === "object") {
           setImageUrl(data.photos[0].image.web);
         } else {
-          setImageUrl('');
+          setImageUrl("");
         }
       }).catch(function (err) {
         return console.log(err);
@@ -30542,7 +30550,7 @@ function getBundleURL() {
 }
 
 function getBaseURL(url) {
-  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)\/[^/]+$/, '$1') + '/';
+  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)?\/[^/]+(?:\?.*)?$/, '$1') + '/';
 }
 
 exports.getBundleURL = getBundleURLCached;
@@ -30629,7 +30637,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52125" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51245" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -4,13 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:cypress": "npx cypress open",
     "start": "parcel index.html --open"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "cypress": "^6.8.0",
     "parcel-bundler": "^1.12.4"
   },
   "dependencies": {
