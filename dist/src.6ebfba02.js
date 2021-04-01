@@ -29793,13 +29793,13 @@ var getCityDetailsByLink = function getCityDetailsByLink(link) {
 exports.getCityDetailsByLink = getCityDetailsByLink;
 
 var getImageByCity = function getImageByCity(cityName) {
-  return fetch("https://api.teleport.org/api/urban_areas/slug:".concat(cityName.toLowerCase().replace(' ', '-'), "/images/"));
+  return fetch("https://api.teleport.org/api/urban_areas/slug:".concat(cityName.toLowerCase().replace(" ", "-"), "/images/"));
 };
 
 exports.getImageByCity = getImageByCity;
 
 var getScoresByCity = function getScoresByCity(cityName) {
-  return fetch("https://api.teleport.org/api/urban_areas/slug:".concat(cityName.toLowerCase().replace(' ', '-'), "/scores/"));
+  return fetch("https://api.teleport.org/api/urban_areas/slug:".concat(cityName.toLowerCase().replace(" ", "-"), "/scores/"));
 };
 
 exports.getScoresByCity = getScoresByCity;
@@ -30637,7 +30637,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51245" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50950" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

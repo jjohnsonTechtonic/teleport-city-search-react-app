@@ -3,31 +3,46 @@ import SearchResults from "../support/Components/SearchResults";
 import CityDetails from "../support/Components/CityDetails";
 import CityScores from "../support/Components/CityScores";
 
-describe("What happens when you click on a result", function () {
-  beforeEach(function () {
+describe("What happens when you click on a result", () => {
+  let searchBar, searchResults, cityDetails, cityScores;
+
+  before(() => {
+    searchBar = new SearchBar();
+    searchResults = new SearchResults();
+    cityDetails = new CityDetails();
+    cityScores = new CityScores();
+  });
+
+  beforeEach(() => {
     cy.visit("/");
-    this.searchBar = new SearchBar();
-    this.searchResults = new SearchResults();
-    this.cityDetails = new CityDetails();
-    this.cityScores = new CityScores();
   });
 
-  it("should display everything!", function () {
-    this.searchBar.getSearchBar().submit();
-    this.searchResults.getAllResults().first().click();
-    this.cityDetails.getDetails().should("be.visible");
-    this.cityDetails.getImage().should("be.visible");
-    this.cityScores.getScores().should("be.visible");
+  it("should not have a details component upon startup", () => {
+    cityDetails.getDetails().should("not.exist");
+    cityScores.getScores().should("not.exist");
   });
 
-  it("should show no details are available", function () {
-    this.searchBar
+  it("should display everything!", () => {
+    searchBar.getSearchBar().submit();
+    searchResults.getAllResults().first().click();
+    //assertions
+    cityDetails.getDetails().should("be.visible");
+    cityDetails.getImage().should("be.visible");
+    cityScores.getScores().should("be.visible");
+  });
+
+  it("should show no details are available", () => {
+    const searchTerm = "riverside";
+
+    searchBar
       .getSearchBarInput()
-      .type("riverside")
-      .should("have.value", "riverside");
-    this.searchBar.getSearchBar().submit();
-    this.searchResults.getAllResults().first().click();
-    this.cityDetails.getDetails().should("be.visible");
-    this.cityScores.nothingAvailable().contains("No details available");
+      .type(searchTerm)
+      .should("have.value", searchTerm);
+    searchBar.getSearchBar().submit();
+    searchResults.getAllResults().first().click();
+    //assertions
+    cityDetails.getDetails().should("be.visible");
+    cityScores.nothingAvailable().contains("No details available");
+    cityScores.getScores();
   });
 });

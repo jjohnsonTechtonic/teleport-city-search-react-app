@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test:cypress": "npx cypress open",
+    "test": "npx cypress open",
     "start": "parcel index.html --open"
   },
   "keywords": [],
@@ -15,6 +15,7 @@
     "parcel-bundler": "^1.12.4"
   },
   "dependencies": {
+    "chai": "^4.3.4",
     "node-sass": "^5.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",

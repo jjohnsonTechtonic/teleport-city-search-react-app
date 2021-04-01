@@ -3,39 +3,46 @@ import SearchResults from "../support/Components/SearchResults";
 import CityDetails from "../support/Components/CityDetails";
 import CityScores from "../support/Components/CityScores";
 
-describe("Searching", function () {
-  beforeEach(function () {
+describe("Searching", () => {
+  let searchBar, searchResults, cityDetails, cityScores;
+  before(() => {
+    searchBar = new SearchBar();
+    searchResults = new SearchResults();
+    cityDetails = new CityDetails();
+    cityScores = new CityScores();
+  });
+
+  beforeEach(() => {
     cy.visit("/");
-    this.searchBar = new SearchBar();
-    this.searchResults = new SearchResults();
-    this.cityDetails = new CityDetails();
-    this.cityScores = new CityScores();
   });
 
-  it("should go and search for Taipei", function () {
-    this.searchBar
-      .getSearchBarInput()
-      .type("taipei")
-      .should("have.value", "taipei");
-    this.searchBar.getSearchBar().submit();
-    this.searchResults.getAllResults().contains("Taipei").and("be.visible");
+  it("should go and search for Taipei", () => {
+    searchBar.getSearchBarInput().type("taipei").should("have.value", "taipei");
+    searchBar.getSearchBar().submit();
+    //assertions
+    searchResults.getAllResults().then((el) => {
+      expect(el).to.include.html("Taipei");
+      expect(el).length.to.be.at.least(1);
+    });
   });
 
-  it("should be invalid", function () {
+  it("should be invalid", () => {
     const gibberish = "ejshfgebfjefu";
-    this.searchBar
+    searchBar
       .getSearchBarInput()
       .type(gibberish + "{enter}")
       .should("have.value", gibberish);
-    this.searchResults.getResultsHeading().contains("No results");
-    this.searchResults.getAllResults().should("not.exist");
+    //assertions
+    searchResults.getResultsHeading().should("have.html", "No results yet!");
+    searchResults.getAllResults().should("not.exist");
   });
 
-  it("should just display the 25 default search results", function () {
-    this.searchBar.getSearchBar().submit();
-    this.searchResults.getResultsHeading().contains("25 matches found");
-    this.searchResults.getAllResults().should((b) => {
-      expect(b).to.have.length(25);
+  it("should just display the 25 default search results", () => {
+    searchBar.getSearchBar().submit();
+    //assertions
+    searchResults.getResultsHeading().should("have.html", "25 matches found");
+    searchResults.getAllResults().then((el) => {
+      expect(el).to.have.length(25);
     });
   });
 });
